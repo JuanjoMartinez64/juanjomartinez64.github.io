@@ -43,8 +43,9 @@ async function login() {
 
 // Función para cerrar sesión
 async function logout() {
+    const returnToUrl = encodeURIComponent(window.location.origin); // Codificar correctamente la URL
     await auth0.logout({
-        returnTo: window.location.origin // Redirige al inicio
+        returnTo: returnToUrl // Usar la URL codificada
     });
 }
 
