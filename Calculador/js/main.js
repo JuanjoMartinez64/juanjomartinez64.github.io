@@ -102,9 +102,12 @@ async function main() {
     mostrar();
   }
   
-  function mostrar() {
+  async function mostrar() {
     const contenedor = document.getElementById('productos-container');
     contenedor.innerHTML = ''; // Limpia el contenedor
+
+    // Verificar si el usuario está autenticado
+    const isLoggedIn = await isAuthenticated();
 
     if (productos.length > 0) {
         let cardsHtml = '';
@@ -116,8 +119,10 @@ async function main() {
                     <div class="card-body">
                         <h5 class="card-title">${producto.name}</h5>
                         <p class="card-text">$${producto.precio}</p>
-                        <button class="btn btn-warning" id="editar" onclick="cargarProductoEnFormulario('${producto.id}', '${producto.name}', '${producto.precio}', '${producto.img}')">Editar</button>
-                        <button class="btn btn-danger" onclick="eliminarProducto(${producto.id})" id="eliminar">Eliminar</button>
+                        ${isLoggedIn ? `
+                            <button class="btn btn-warning" onclick="cargarProductoEnFormulario('${producto.id}', '${producto.name}', '${producto.precio}', '${producto.img}')">Editar</button>
+                            <button class="btn btn-danger" onclick="eliminarProducto(${producto.id})">Eliminar</button>
+                        ` : ''}
                     </div>
                 </div>`;
         }
