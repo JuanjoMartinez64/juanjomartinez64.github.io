@@ -2,7 +2,6 @@ apiUrl='https://6729702f6d5fa4901b6d2615.mockapi.io/producto';
 // Array donde se guardarán los productos
 let productos = [];
 let productoEditandoId = null;
-
 // Función para obtener los productos y guardarlos en el array
 async function obtenerProductos() {
     return fetch(apiUrl)
