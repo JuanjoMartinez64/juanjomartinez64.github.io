@@ -4,7 +4,7 @@ async function initAuth0() {
     auth0 = await createAuth0Client({
         domain: 'dev-u882ixltt6c6nehq.us.auth0.com',
         client_id: 'QgQrwgXrFMl7toaHdNJBZMUvwpnH67bU',
-        redirect_uri: 'https://juanjomartinez64.github.io/Calculador/'
+        redirect_uri: window.location.href
     });
 
     // Verificar si estamos en el flujo de redirección de Auth0
@@ -12,9 +12,7 @@ async function initAuth0() {
         try {
             // Maneja la redirección y obtiene el token de autorización
             await auth0.handleRedirectCallback();
-            // Redirige a la página principal después de un inicio de sesión exitoso
-            window.history.replaceState({}, document.title, window.location.pathname);
-            window.location.href = "https://juanjomartinez64.github.io/Calculador/";  // Redirección
+            window.history.replaceState({}, document.title, window.location.pathname); // Limpiar la URL después de la redirección
         } catch (error) {
             console.error("Error en handleRedirectCallback:", error);
         }
@@ -39,15 +37,14 @@ async function initAuth0() {
 // Función para iniciar sesión
 async function login() {
     await auth0.loginWithRedirect({
-        redirectUri: 'https://juanjomartinez64.github.io/Calculador/',  // Redirección a la URL correcta
-        responseMode: 'query',  // Asegúrate de que sea 'query', no 'web_message'
+        redirectUri: window.location.href
     });
 }
 
 // Función para cerrar sesión
 async function logout() {
     await auth0.logout({
-        returnTo: window.location.origin, // Redirige al inicio
+        returnTo: window.location.origin // Redirige al inicio
     });
 }
 
