@@ -58,16 +58,19 @@ async function getUser() {
 
 // Inicializar Auth0
 window.onload = async () => {
-  await initAuth0(); // Espera a que Auth0 se inicialice
-
-  const isLoggedIn = await isAuthenticated(); // Verifica si el usuario está autenticado
-  if (isLoggedIn) {
-      const user = await getUser(); // Obtiene la información del usuario
-      document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
-      document.getElementById("login").style.display = "none"; // Ocultar el botón de login
-      document.getElementById("logout").style.display = "block"; // Mostrar el botón de logout
-  } else {
-      document.getElementById("logout").style.display = "none"; // Ocultar el botón de logout
-      document.getElementById("login").style.display = "block"; // Mostrar el botón de login
-  }
+    await initAuth0();
+    
+    const isLoggedIn = await isAuthenticated();
+    if (isLoggedIn) {
+        const user = await getUser();
+        document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
+        document.getElementById("login").style.display = "none";
+        document.getElementById("logout").style.display = "block";
+        document.getElementById("agregarArticulo").style.display = "block";
+    } else {
+        document.getElementById("logout").style.display = "none";
+        document.getElementById("login").style.display = "block";
+        document.getElementById("agregarArticulo").style.display = "none";
+    }
+    main(); // Llamada a la función principal para cargar productos
 };

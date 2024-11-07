@@ -204,5 +204,4 @@ async function main() {
     }
 });
 
-main();
 
