@@ -43,10 +43,12 @@ async function login() {
 
 // Función para cerrar sesión
 async function logout() {
-    const returnToUrl = encodeURIComponent('https://juanjomartinez64.github.io/Calculador/'); // Codificar correctamente la URL
     await auth0.logout({
-        returnTo: returnToUrl // Usar la URL codificada
+        returnTo: 'https://juanjomartinez64.github.io/Calculador/'
     });
+
+    // Intentar redirigir manualmente si Auth0 no lo hace
+    window.location.href = 'https://juanjomartinez64.github.io/Calculador/';
 }
 
 // Función para verificar si el usuario está autenticado
