@@ -27,10 +27,12 @@ async function initAuth0() {
         document.getElementById("login").style.display = "none";
         document.getElementById("logout").style.display = "block";
         document.getElementById("agregarArticulo").style.display = "block"; // Muestra el botón de agregar artículo si está logueado
+        document.getElementById("exampleModalLabel").style.display = "block";
     } else {
         document.getElementById("login").style.display = "block";
         document.getElementById("logout").style.display = "none";
         document.getElementById("agregarArticulo").style.display = "none";
+        document.getElementById("exampleModalLabel").style.display = "none";
     }
 }
 
