@@ -15,7 +15,7 @@ async function initAuth0() {
             await auth0.handleRedirectCallback();
             window.history.replaceState({}, document.title, window.location.pathname);
             // Después de la redirección, puedes hacer algo, como redirigir a una página específica.
-            window.location.href = "https://juanjomartinez64.github.io/Calculador/dashboard"; // Ejemplo de redirección a una página específica
+            window.location.href = "https://juanjomartinez64.github.io/Calculador/"; // Ejemplo de redirección a una página específica
         } catch (error) {
             console.error("Error en handleRedirectCallback:", error);
         }
