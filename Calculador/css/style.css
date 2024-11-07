@@ -9,7 +9,10 @@ h1{
     text-align: center;
 }
 
-
+#userInfo{
+    color: white;
+    font-size: 15px;
+}
 
 body{
     height: 100vh;
