@@ -4,8 +4,8 @@ let auth0 = null;
 
 async function initAuth0() {
   auth0 = await createAuth0Client({
-    domain: 'dev-1wcyuluuuuifcgh6.us.auth0.com', // Reemplaza con tu dominio de Auth0
-    client_id: 'PX65XGBVjKempz5E1m4WOt6MJK4sqTMI', // Reemplaza con tu Client ID
+    domain: 'dev-argtrbvnnrexnrjr.us.auth0.com', // Reemplaza con tu dominio de Auth0
+    client_id: '6kXYNwtvr7zHGE3mWUJg2cTVLo9530Kv', // Reemplaza con tu Client ID
     redirect_uri: window.location.href, // URL donde se redirige después del login
   });
 }
