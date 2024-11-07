@@ -6,7 +6,7 @@ async function initAuth0() {
     auth0 = await createAuth0Client({
         domain: 'dev-u882ixltt6c6nehq.us.auth0.com',
         client_id: 'QgQrwgXrFMl7toaHdNJBZMUvwpnH67bU',
-        redirect_uri: window.location.href,
+        redirect_uri: 'https://juanjomartinez64.github.io/Calculador',
         cacheLocation: 'localstorage' // Usa localStorage para mejorar la persistencia
     });
 
