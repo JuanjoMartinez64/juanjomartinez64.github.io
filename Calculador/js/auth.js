@@ -8,15 +8,7 @@ async function initAuth0() {
         client_id: 'QgQrwgXrFMl7toaHdNJBZMUvwpnH67bU',
     });
 
-    // Verificar si estamos en el flujo de redirección de Auth0
-    if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
-        try {
-            await auth0.handleRedirectCallback();
-            window.history.replaceState({}, document.title, window.location.pathname);
-        } catch (error) {
-            console.error("Error en handleRedirectCallback:", error);
-        }
-    }
+   
     
     // Verificar si el usuario ya está autenticado
     const isAuthenticated = await auth0.isAuthenticated();
