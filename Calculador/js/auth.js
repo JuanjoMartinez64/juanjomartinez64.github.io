@@ -13,7 +13,7 @@ async function initAuth0() {
    await handleRedirectCallback();
    const isAuthenticated = await auth0.isAuthenticated();
 // Función para iniciar sesión
-
+}
 async function handleRedirectCallback() {
     if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
        await auth0.handleRedirectCallback();
