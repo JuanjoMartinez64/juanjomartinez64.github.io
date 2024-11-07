@@ -1,7 +1,9 @@
+//Main.js
 apiUrl='https://6729702f6d5fa4901b6d2615.mockapi.io/producto';
 // Array donde se guardarán los productos
 let productos = [];
 let productoEditandoId = null;
+let auth0 = null;
 // Función para obtener los productos y guardarlos en el array
 async function obtenerProductos() {
     return fetch(apiUrl)
@@ -22,12 +24,25 @@ async function obtenerProductos() {
 }
 
 // Función para agregar un nuevo producto a la API
+async function checkAuthentication() {
+  const isLoggedIn = await isAuthenticated(); // Verificar si el usuario está autenticado
+  if (!isLoggedIn) {
+      alert("Debes iniciar sesión para realizar esta acción");
+      return false;
+  }
+  return true;
+}
+
+// Función para agregar un nuevo producto a la API
 async function agregarProducto() {
+  const isAuthenticated = await checkAuthentication();
+  if (!isAuthenticated) return; // Si no está autenticado, no permite agregar producto
+
   const nombre = document.getElementById('nombre').value;
   const precio = parseFloat(document.getElementById('precio').value);
   let imgUrl = document.getElementById('imgUrl').value;
-  if(imgUrl==''){
-    imgUrl='Images/imagen_articulo_por_defecto.jpg'
+  if (imgUrl == '') {
+      imgUrl = 'Images/imagen_articulo_por_defecto.jpg';
   }
   const nuevoProducto = {
       name: nombre,
@@ -50,14 +65,12 @@ async function agregarProducto() {
 
       const productoAgregado = await response.json();
       productos.push(productoAgregado); // Agrega el nuevo producto al array de productos
-
       mostrar(); // Muestra la lista actualizada
       document.getElementById('nombre').value = '';
-        document.getElementById('precio').value = '';
-        document.getElementById('imgUrl').value = '';
+      document.getElementById('precio').value = '';
+      document.getElementById('imgUrl').value = '';
       // Cerrar el modal
       const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-
       modal.hide();
   } catch (error) {
       console.error('Hubo un problema al agregar el producto:', error);
@@ -65,13 +78,15 @@ async function agregarProducto() {
 }
 
 async function eliminarProducto(id) {
+  const isAuthenticated = await checkAuthentication();
+  if (!isAuthenticated) return; // Si no está autenticado, no permite eliminar
+
   try {
       const response = await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
       if (!response.ok) throw new Error('Error al eliminar el producto');
 
       // Recargar los productos desde la API para asegurarse de que la lista esté actualizada
       await obtenerProductos();
-      
       // Mostrar los productos actualizados
       mostrar();
   } catch (error) {
@@ -128,6 +143,9 @@ function cargarProductoEnFormulario(id, nombre, precio, img) {
 }
 
 async function actualizarProducto() {
+  const isAuthenticated = await checkAuthentication();
+  if (!isAuthenticated) return; // Si no está autenticado, no permite actualizar
+
   const nombre = document.getElementById('nombre').value;
   const precio = parseFloat(document.getElementById('precio').value);
   const imgUrl = document.getElementById('imgUrl').value;
@@ -151,9 +169,9 @@ async function actualizarProducto() {
       // Actualizamos el producto en el array local y refrescamos la lista
       productos = productos.map(prod => prod.id === productoEditandoId ? data : prod);
       productoEditandoId = null; // Resetear ID después de la edición
-       // Muestra la lista actualizada
+      // Muestra la lista actualizada
 
-    // Cerrar el modal
+      // Cerrar el modal
       const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
       modal.hide();
       await obtenerProductos();

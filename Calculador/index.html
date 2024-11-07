@@ -16,8 +16,7 @@
     <button id="login" onclick="login()">Iniciar sesión</button>
     <button id="logout" onclick="logout()">Cerrar sesión</button>   
     <script>
-        window.onload = async () => {
-            // Asegúrate de que Auth0 esté inicializado antes de verificar el estado
+                window.onload = async () => {
             await initAuth0(); // Espera a que Auth0 se inicialice
             
             const isLoggedIn = await isAuthenticated(); // Verifica si el usuario está autenticado
@@ -26,11 +25,13 @@
                 document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
                 document.getElementById("login").style.display = "none"; // Ocultar el botón de login
                 document.getElementById("logout").style.display = "block"; // Mostrar el botón de logout
+                document.getElementById("agregarArticulo").style.display = "block"; // Mostrar el botón de agregar producto
             } else {
                 document.getElementById("logout").style.display = "none"; // Ocultar el botón de logout
                 document.getElementById("login").style.display = "block"; // Mostrar el botón de login
+                document.getElementById("agregarArticulo").style.display = "none"; // Ocultar el botón de agregar producto
             }
-        };
+            };
     </script>
     
      <div class="seccion-articulos">
