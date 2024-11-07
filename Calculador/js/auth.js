@@ -6,6 +6,7 @@ async function initAuth0() {
     auth0 = await createAuth0Client({
         domain: 'dev-u882ixltt6c6nehq.us.auth0.com',
         client_id: 'QgQrwgXrFMl7toaHdNJBZMUvwpnH67bU',
+        redirect_uri: 'https://juanjomartinez64.github.io/Calculador/'
     });
 
    
@@ -27,7 +28,9 @@ async function initAuth0() {
 
 // Función para iniciar sesión
 async function login() {
-    await auth0.loginWithRedirect();
+    await auth0.loginWithRedirect({
+        redirectUri: 'https://juanjomartinez64.github.io/Calculador/' // Especifica la URL donde deseas redirigir
+    });
 }
 
 // Función para cerrar sesión
