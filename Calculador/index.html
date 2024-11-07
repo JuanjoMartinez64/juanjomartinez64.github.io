@@ -17,9 +17,12 @@
     <button id="logout" onclick="logout()">Cerrar sesión</button>   
     <script>
         window.onload = async () => {
-            const isLoggedIn = await isAuthenticated();
+            // Asegúrate de que Auth0 esté inicializado antes de verificar el estado
+            await initAuth0(); // Espera a que Auth0 se inicialice
+            
+            const isLoggedIn = await isAuthenticated(); // Verifica si el usuario está autenticado
             if (isLoggedIn) {
-                const user = await getUser();
+                const user = await getUser(); // Obtiene la información del usuario
                 document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
                 document.getElementById("login").style.display = "none"; // Ocultar el botón de login
                 document.getElementById("logout").style.display = "block"; // Mostrar el botón de logout
