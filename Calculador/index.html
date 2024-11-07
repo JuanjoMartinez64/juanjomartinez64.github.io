@@ -17,16 +17,18 @@
     <button id="logout" onclick="logout()">Cerrar sesión</button>   
     <script>
         window.onload = async () => {
-          const isLoggedIn = await isAuthenticated();
-          if (isLoggedIn) {
-            const user = await getUser();
-            document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
-            document.getElementById("login").style.display = "none"; // Ocultar el botón de login
-          } else {
-            document.getElementById("logout").style.display = "none"; // Ocultar el botón de logout
-          }
+            const isLoggedIn = await isAuthenticated();
+            if (isLoggedIn) {
+                const user = await getUser();
+                document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
+                document.getElementById("login").style.display = "none"; // Ocultar el botón de login
+                document.getElementById("logout").style.display = "block"; // Mostrar el botón de logout
+            } else {
+                document.getElementById("logout").style.display = "none"; // Ocultar el botón de logout
+                document.getElementById("login").style.display = "block"; // Mostrar el botón de login
+            }
         };
-      </script>
+    </script>
     
      <div class="seccion-articulos">
         <h1>
