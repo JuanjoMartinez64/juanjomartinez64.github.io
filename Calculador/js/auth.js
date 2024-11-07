@@ -39,7 +39,8 @@ async function initAuth0() {
 // Función para iniciar sesión
 async function login() {
     await auth0.loginWithRedirect({
-        redirectUri: 'https://juanjomartinez64.github.io/Calculador/' // Especifica la URL donde deseas redirigir
+        redirectUri: 'https://juanjomartinez64.github.io/Calculador/', // Especifica la URL donde deseas redirigir
+        responseMode: 'query'
     });
 }
 
