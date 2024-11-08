@@ -63,6 +63,43 @@
             </div>
     </div>
 
+    <div class="budgetBuilderContainer">
+        <h1>
+            Armar presupuesto
+        </h1>
+        <form>
+            <div class="items" id="budgetItems">
+                <div class="itemContainer" id="budgetItems">
+                    <div class="inputContainer">
+                        <label for="itemSelector">Seleccionar Articulo</label>
+                        <select class="form-select" aria-label="Default select example" id="itemSelector">
+                            <option selected>Selecciona un articulo</option>
+                        </select>
+                    </div>
+                    <div class="inputContainer">
+                        <label for="cantItem">Cantidad de articulos</label>
+                        <input type="number" id="cantItem" class="form-control" required>
+                    </div>
+                    <div class="inputContainer">
+                        <label for="cantItem" class="priceLabel">Precio del articulo</label>
+                        <div class="priceContainer">
+                            <p id="priceItem">$4000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success mt-5 addBtn" id="addItem">+</button>
+            <div class="inputContainer cantBocasContainer">
+                <label for="cantBocas">Cantidad de bocas</label>
+                <input type="number" id="cantBocas" class="form-control" required>
+            </div>
+            <div class="btnGenerarContainer">
+                <button type="button" class="btn btn-primary">Generar PDF</button>
+                <button type="button" class="btn btn-primary">Generar PDF Discriminado</button>
+            </div>
+        </form>
+    </div>
+
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     

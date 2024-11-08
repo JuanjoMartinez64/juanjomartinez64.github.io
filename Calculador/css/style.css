@@ -22,9 +22,15 @@ h1{
     font-size: 15px;
 }
 
-body{
-    height: 100vh;
+html, body {
+    height: 100%; /* Asegura que el cuerpo y el html ocupen toda la altura de la ventana */
+    margin: 0; /* Elimina márgenes por defecto */
+}
+
+body {
     background: linear-gradient(to bottom, #0d0d0d, #5c0303);
+    background-attachment: fixed; /* Hace que el fondo no se mueva con el contenido */
+    min-height: 100%;
 }
 
 input{
@@ -61,3 +67,89 @@ input{
 
 
 
+.budgetBuilderContainer{
+    max-width: 100%;
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+label{
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+#itemSelector{
+    width: 250px;
+}
+
+#cantItem{
+    width: 100px;
+    margin-left: 75px;
+    margin-right: 75px;
+}
+
+.priceContainer{
+    width: 250px;
+    height: 38px;
+    align-items: center;
+    text-align: center;
+    display: flex;
+}
+
+.inputContainer>.priceContainer>p{
+    color: #ffffff;
+    font-size: 16px;
+    position: relative;
+    margin-bottom: 0;
+    margin: auto;
+}
+
+form{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cantBocasContainer{
+    margin-top: 2rem;
+}
+#cantBocas{
+    width: 100px;
+}
+
+.addBtn{
+    width: 100px;
+}
+
+.btnGenerarContainer{
+    margin-top: 4rem;
+    display: flex;
+    gap: 2rem;
+}

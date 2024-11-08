@@ -205,3 +205,41 @@ async function main() {
 });
 
 
+document.getElementById('addItem').addEventListener('click', () => {
+    let contenedor = document.getElementById('budgetItems');
+
+    // Crear el HTML para la nueva fila
+    const nuevaFila = document.createElement('div');
+    nuevaFila.classList.add('itemContainer');
+    
+    // Crear la estructura HTML dentro de la nueva fila
+    nuevaFila.innerHTML = `
+        <div class="inputContainer">
+            <label for="itemSelector">Seleccionar Articulo</label>
+            <select class="form-select" aria-label="Default select example" id="itemSelector">
+                <option selected>Selecciona un articulo</option>
+            </select>
+        </div>
+        <div class="inputContainer">
+            <label for="cantItem">Cantidad de articulos</label>
+            <input type="number" id="cantItem" class="form-control" required>
+        </div>
+        <div class="inputContainer">
+            <label for="cantItem" class="priceLabel">Precio del articulo</label>
+            <div class="priceContainer">
+                <p id="priceItem">$4000</p>
+            </div>
+        </div>
+        <button type="button" class="btn btn-danger deltbn eliminarBtn">X</button>
+    `;
+    
+    // Añadir la nueva fila al contenedor
+    contenedor.appendChild(nuevaFila);
+
+    // Añadir evento al botón de eliminar dentro de la nueva fila
+    nuevaFila.querySelector('.eliminarBtn').addEventListener('click', () => {
+        // Eliminar el contenedor de la fila completa (el div con la clase 'itemContainer')
+        contenedor.removeChild(nuevaFila);
+    });
+});
+
