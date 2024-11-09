@@ -131,9 +131,9 @@ async function eliminarProducto(id) {
 
 function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
     console.log('Cargando producto en el formulario...');
-    console.log('ID del producto a editar:', id);  // Verifica que el ID se pase correctamente
+    console.log('ID del producto a editar:', id);
 
-    // Cargar los datos en el formulario
+    // Asignar valores al formulario
     document.getElementById('nombre').value = nombre;
     document.getElementById('precio').value = precio;
     document.getElementById('imgUrl').value = img;
@@ -141,7 +141,7 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
 
     // Guardar el ID del producto que estamos editando
     productoEditandoId = id;
-    console.log('ID guardado en productoEditandoId:', productoEditandoId);  // Verifica que el ID se guarde correctamente
+    console.log('ID guardado en productoEditandoId:', productoEditandoId);
 
     // Abrir el modal
     const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
@@ -149,8 +149,7 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
 }
 
 async function actualizarProducto() {
-    const isAuthenticated = await checkAuthentication();
-    if (!isAuthenticated) return;
+    console.log('ID del producto a actualizar:', productoEditandoId);  // Verifica el ID antes de la actualización
 
     if (!productoEditandoId) {
         console.error('No hay un producto para editar');
@@ -160,7 +159,7 @@ async function actualizarProducto() {
     const nombre = document.getElementById('nombre').value;
     const precio = parseFloat(document.getElementById('precio').value);
     const imgUrl = document.getElementById('imgUrl').value;
-    const tipo = document.querySelector('.selectedType').value; // Obtener el valor del select
+    const tipo = document.querySelector('.selectedType').value;
 
     const productoActualizado = {
         name: nombre,
@@ -179,8 +178,11 @@ async function actualizarProducto() {
         if (!response.ok) throw new Error('Error al actualizar el producto');
         const data = await response.json();
 
+        // Actualizar el producto en la lista local
         productos = productos.map(prod => prod.id === productoEditandoId ? data : prod);
-        productoEditandoId = null;
+
+        // Reseteamos el ID después de la actualización
+        productoEditandoId = null;  // Limpiar el ID después de la actualización
 
         const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
         modal.hide();
