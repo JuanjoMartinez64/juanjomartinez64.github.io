@@ -9,6 +9,8 @@ h1{
     text-align: center;
 }
 
+
+
 .mensajeBienvenida{
     display: flex;
     flex-direction: column;
@@ -48,15 +50,10 @@ input{
     object-fit: cover;
 }
 
-#productos-container{
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
+
 
 .seccion-articulos{
+    width: 100%;
     margin-top: 5rem;
     display: flex;
     flex-direction: column;
@@ -64,7 +61,15 @@ input{
     justify-content: center;
     gap: 1rem;
 }
-
+#productos-container{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
 
 
 .budgetBuilderContainer{
