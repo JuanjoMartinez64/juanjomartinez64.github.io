@@ -109,7 +109,7 @@ async function eliminarProducto(id) {
 
         for (const producto of productos) {
             cardsHtml += `
-                <div class="card mx-auto" style="max-width: 15rem;">
+                <div class="card" style="max-width: 15rem;">
                     <img src="${producto.img}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${producto.name}</h5>
