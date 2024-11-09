@@ -40,7 +40,7 @@ async function agregarProducto() {
   const nombre = document.getElementById('nombre').value;
   const precio = parseFloat(document.getElementById('precio').value);
   let imgUrl = document.getElementById('imgUrl').value;
-  const type = document.getElementById('selectedType').target.value;
+  const type = document.getElementById('selectedType').value;
   if (imgUrl == '') {
       imgUrl = 'Images/imagen_articulo_por_defecto.jpg';
   }
