@@ -48,7 +48,7 @@ async function agregarProducto() {
       name: nombre,
       precio: precio,
       img: imgUrl,
-      tipo: tipo
+      tipo: type
   };
 
   try {
@@ -114,6 +114,7 @@ async function eliminarProducto(id) {
                     <div class="card-body">
                         <h5 class="card-title">${producto.name}</h5>
                         <p class="card-text">$${producto.precio}</p>
+                        <p class="card-text">Categoria: ${producto.tipo}</p>
                         ${isLoggedIn ? `
                             <button class="btn btn-warning" onclick="cargarProductoEnFormulario('${producto.id}', '${producto.name}', '${producto.precio}', '${producto.img}')">Editar</button>
                             <button class="btn btn-danger" onclick="eliminarProducto(${producto.id})">Eliminar</button>
