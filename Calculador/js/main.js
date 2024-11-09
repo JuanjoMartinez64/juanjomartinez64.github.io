@@ -134,7 +134,7 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
     document.getElementById('nombre').value = nombre;
     document.getElementById('precio').value = precio;
     document.getElementById('imgUrl').value = img;
-    document.querySelector('.itemSelected').value = tipo;
+    document.querySelector('.selectedType').value = tipo;
     
     // Guardar el ID del producto que estamos editando
     productoEditandoId = id;
@@ -151,7 +151,7 @@ async function actualizarProducto() {
   const nombre = document.getElementById('nombre').value;
   const precio = parseFloat(document.getElementById('precio').value);
   const imgUrl = document.getElementById('imgUrl').value;
-  const tipo = document.querySelector('.itemSelected').value;
+  const tipo = document.querySelector('.selectedType').value;
 
   const productoActualizado = {
       name: nombre,
