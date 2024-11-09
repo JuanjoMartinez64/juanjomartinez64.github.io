@@ -151,7 +151,7 @@ async function actualizarProducto() {
   const nombre = document.getElementById('nombre').value;
   const precio = parseFloat(document.getElementById('precio').value);
   const imgUrl = document.getElementById('imgUrl').value;
-  const tipo = document.querySelector('itemSelected').value;
+  const tipo = document.querySelector('.itemSelected').value;
 
   const productoActualizado = {
       name: nombre,
