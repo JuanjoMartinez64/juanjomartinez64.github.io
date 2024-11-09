@@ -109,7 +109,7 @@ async function eliminarProducto(id) {
 
         for (const producto of productos) {
             cardsHtml += `
-                <div class="card" style="max-width: 15rem;">
+                <div class="card" style="width: 15rem;">
                     <img src="${producto.img}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${producto.name}</h5>
@@ -227,7 +227,6 @@ document.getElementById('addItem').addEventListener('click', () => {
     
     // Crear la estructura HTML dentro de la nueva fila
     nuevaFila.innerHTML = `
-        <div class="itemContainer" id="budgetItems">
                     <div class="inputContainer">
                         <label for="itemSelector">Seleccionar tipo de articulo</label>
                         <select class="form-select typeItemSelector" aria-label="Default select example">
@@ -253,7 +252,6 @@ document.getElementById('addItem').addEventListener('click', () => {
                             <p class="priceItem">$0</p>
                         </div>
                     </div>
-                </div>
         <button type="button" class="btn btn-danger deltbn eliminarBtn">X</button>
     `;
     
