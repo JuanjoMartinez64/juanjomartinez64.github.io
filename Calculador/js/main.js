@@ -116,7 +116,7 @@ async function eliminarProducto(id) {
                         <p class="card-text">$${producto.precio}</p>
                         <p class="card-text">Categoria: ${producto.tipo}</p>
                         ${isLoggedIn ? `
-                            <button class="btn btn-warning" onclick="cargarProductoEnFormulario('${producto.id}', '${producto.name}', '${producto.precio}', '${producto.img}')">Editar</button>
+                            <button class="btn btn-warning" onclick="cargarProductoEnFormulario('${producto.id}', '${producto.name}', '${producto.precio}', '${producto.img}', '${producto.tipo}')">Editar</button>
                             <button class="btn btn-danger" onclick="eliminarProducto(${producto.id})">Eliminar</button>
                         ` : ''}
                     </div>
@@ -129,11 +129,12 @@ async function eliminarProducto(id) {
     }
 }
 
-function cargarProductoEnFormulario(id, nombre, precio, img) {
+function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
     // Cargar los datos en el formulario
     document.getElementById('nombre').value = nombre;
     document.getElementById('precio').value = precio;
     document.getElementById('imgUrl').value = img;
+    document.querySelector('itemSelected').value = tipo;
     
     // Guardar el ID del producto que estamos editando
     productoEditandoId = id;
@@ -150,11 +151,13 @@ async function actualizarProducto() {
   const nombre = document.getElementById('nombre').value;
   const precio = parseFloat(document.getElementById('precio').value);
   const imgUrl = document.getElementById('imgUrl').value;
+  const tipo = document.querySelector('itemSelected').value;
 
   const productoActualizado = {
       name: nombre,
       precio: precio,
-      img: imgUrl
+      img: imgUrl,
+      tipo: tipo
   };
 
   try {
