@@ -130,6 +130,9 @@ async function eliminarProducto(id) {
 }
 
 function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
+    console.log('Cargando producto en el formulario...');
+    console.log('ID del producto a editar:', id);  // Verifica que el ID se pase correctamente
+
     // Cargar los datos en el formulario
     document.getElementById('nombre').value = nombre;
     document.getElementById('precio').value = precio;
@@ -138,7 +141,8 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
 
     // Guardar el ID del producto que estamos editando
     productoEditandoId = id;
-    console.log(productoEditandoId);
+    console.log('ID guardado en productoEditandoId:', productoEditandoId);  // Verifica que el ID se guarde correctamente
+
     // Abrir el modal
     const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
     modal.show();
