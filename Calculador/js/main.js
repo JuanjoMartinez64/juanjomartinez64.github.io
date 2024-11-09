@@ -156,6 +156,9 @@ async function actualizarProducto() {
         return;
     }
 
+    const botonConfirmar = document.getElementById('agregarArticulo'); // Asumiendo que el id del botón es 'agregarArticulo'
+    botonConfirmar.disabled = true; // Deshabilitar el botón para evitar múltiples clics
+
     const nombre = document.getElementById('nombre').value;
     const precio = parseFloat(document.getElementById('precio').value);
     const imgUrl = document.getElementById('imgUrl').value;
@@ -191,6 +194,7 @@ async function actualizarProducto() {
     } catch (error) {
         console.error('Hubo un problema al actualizar el producto:', error);
     }
+    botonConfirmar.disabled = false;
 }
 
 // Llamada principal para obtener y mostrar productos
