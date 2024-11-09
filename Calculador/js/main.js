@@ -145,44 +145,46 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
 }
 
 async function actualizarProducto() {
-  const isAuthenticated = await checkAuthentication();
-  if (!isAuthenticated) return; // Si no está autenticado, no permite actualizar
+    const isAuthenticated = await checkAuthentication();
+    if (!isAuthenticated) return;
 
-  const nombre = document.getElementById('nombre').value;
-  const precio = parseFloat(document.getElementById('precio').value);
-  const imgUrl = document.getElementById('imgUrl').value;
-  const tipo = document.querySelector('.selectedType').value;
+    if (!productoEditandoId) {
+        console.error('No hay un producto para editar');
+        return;
+    }
 
-  const productoActualizado = {
-      name: nombre,
-      precio: precio,
-      img: imgUrl,
-      tipo: tipo
-  };
+    const nombre = document.getElementById('nombre').value;
+    const precio = parseFloat(document.getElementById('precio').value);
+    const imgUrl = document.getElementById('imgUrl').value;
+    const tipo = document.querySelector('.selectedType').value; // Obtener el valor del select
 
-  try {
-      const response = await fetch(`${apiUrl}/${productoEditandoId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(productoActualizado)
-      });
+    const productoActualizado = {
+        name: nombre,
+        precio: precio,
+        img: imgUrl,
+        tipo: tipo
+    };
 
-      if (!response.ok) throw new Error('Error al actualizar el producto');
-      const data = await response.json();
+    try {
+        const response = await fetch(`${apiUrl}/${productoEditandoId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productoActualizado)
+        });
 
-      // Actualizamos el producto en el array local y refrescamos la lista
-      productos = productos.map(prod => prod.id === productoEditandoId ? data : prod);
-      productoEditandoId = null; // Resetear ID después de la edición
-      // Muestra la lista actualizada
+        if (!response.ok) throw new Error('Error al actualizar el producto');
+        const data = await response.json();
 
-      // Cerrar el modal
-      const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-      modal.hide();
-      await obtenerProductos();
-      mostrar();
-  } catch (error) {
-      console.error('Hubo un problema al actualizar el producto:', error);
-  }
+        productos = productos.map(prod => prod.id === productoEditandoId ? data : prod);
+        productoEditandoId = null;
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+        modal.hide();
+        await obtenerProductos();
+        mostrar();
+    } catch (error) {
+        console.error('Hubo un problema al actualizar el producto:', error);
+    }
 }
 
 // Llamada principal para obtener y mostrar productos
