@@ -149,12 +149,16 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
 }
 
 async function actualizarProducto() {
-    console.log('ID del producto a actualizar:', productoEditandoId);  // Verifica el ID antes de la actualización
+    const isAuthenticated = await checkAuthentication();
+    if (!isAuthenticated) return;
 
     if (!productoEditandoId) {
         console.error('No hay un producto para editar');
         return;
     }
+
+    const botonConfirmar = document.getElementById('agregarArticulo'); // Asumiendo que el id del botón es 'agregarArticulo'
+    botonConfirmar.disabled = true; // Deshabilitar el botón para evitar múltiples clics
 
     const nombre = document.getElementById('nombre').value;
     const precio = parseFloat(document.getElementById('precio').value);
@@ -178,11 +182,8 @@ async function actualizarProducto() {
         if (!response.ok) throw new Error('Error al actualizar el producto');
         const data = await response.json();
 
-        // Actualizar el producto en la lista local
         productos = productos.map(prod => prod.id === productoEditandoId ? data : prod);
-
-        // Reseteamos el ID después de la actualización
-        productoEditandoId = null;  // Limpiar el ID después de la actualización
+        productoEditandoId = null;
 
         const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
         modal.hide();
@@ -190,6 +191,8 @@ async function actualizarProducto() {
         mostrar();
     } catch (error) {
         console.error('Hubo un problema al actualizar el producto:', error);
+    } finally {
+        botonConfirmar.disabled = false; // Volver a habilitar el botón después de la operación
     }
 }
 
