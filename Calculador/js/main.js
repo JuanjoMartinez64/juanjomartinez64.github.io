@@ -265,13 +265,19 @@ function loadSelectorItems() {
             }
         });
     });
+
 }
 
 
 //Funcion para escuchar el selector de tipo
 document.addEventListener('change', (event) => {
-    if (event.target.id ==='tipoSeleccionado')
+    let items = document.querySelectorAll('.itemSelector');
+    if (event.target.id === 'tipoSeleccionado') {
+        for (item of items){
+            item.innerHTML = '<option selected value="0">Selecciona un articulo</option>';
+        }
         loadSelectorItems();
+    }
 });
 
 document.addEventListener('change', (event) => {
