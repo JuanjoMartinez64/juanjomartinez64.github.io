@@ -7,18 +7,17 @@ async function initAuth0() {
         redirect_uri: window.location.href
     });
 
-    // Verificar si estamos en el flujo de redirección de Auth0
+    
     if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
         try {
-            // Maneja la redirección y obtiene el token de autorización
+            
             await auth0.handleRedirectCallback();
-            window.history.replaceState({}, document.title, window.location.pathname); // Limpiar la URL después de la redirección
+            window.history.replaceState({}, document.title, window.location.pathname); 
         } catch (error) {
             console.error("Error en handleRedirectCallback:", error);
         }
     }
     
-    // Verificar si el usuario ya está autenticado
     const isAuthenticated = await auth0.isAuthenticated();
 
     if (isAuthenticated) {
@@ -26,7 +25,7 @@ async function initAuth0() {
         document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
         document.getElementById("login").style.display = "none";
         document.getElementById("logout").style.display = "block";
-        document.getElementById("agregarArticulo").style.display = "block"; // Muestra el botón de agregar artículo si está logueado
+        document.getElementById("agregarArticulo").style.display = "block"; 
         document.getElementById("openArticulo").style.display = "block";
     } else {
         document.getElementById("login").style.display = "block";
@@ -36,34 +35,27 @@ async function initAuth0() {
     }
 }
 
-// Función para iniciar sesión
 async function login() {
     await auth0.loginWithRedirect({
         redirectUri: window.location.href
     });
 }
 
-// Función para cerrar sesión
 async function logout() {
     await auth0.logout({
         returnTo: 'https://juanjomartinez64.github.io/Calculador/'
     });
-
-    // Intentar redirigir manualmente si Auth0 no lo hace
     window.location.href = 'https://juanjomartinez64.github.io/Calculador/';
 }
 
-// Función para verificar si el usuario está autenticado
 async function isAuthenticated() {
     return await auth0.isAuthenticated();
 }
 
-// Función para obtener el perfil del usuario
 async function getUser() {
     return await auth0.getUser();
 }
 
-// Inicializar Auth0 cuando la página se carga
 window.onload = async () => {
     await initAuth0();
     
@@ -73,12 +65,12 @@ window.onload = async () => {
         document.getElementById("userInfo").innerHTML = `Bienvenido, ${user.name}`;
         document.getElementById("login").style.display = "none";
         document.getElementById("logout").style.display = "block";
-        document.getElementById("agregarArticulo").style.display = "block";  // Muestra el botón de agregar artículo si está logueado
+        document.getElementById("agregarArticulo").style.display = "block";  
     } else {
         document.getElementById("logout").style.display = "none";
         document.getElementById("login").style.display = "block";
         document.getElementById("agregarArticulo").style.display = "none";
     }
     
-    main(); // Llamada a la función principal para cargar productos
+    main(); 
 }; 

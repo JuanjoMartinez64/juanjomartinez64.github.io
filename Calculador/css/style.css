@@ -30,13 +30,13 @@ h1{
 }
 
 html, body {
-    height: 100%; /* Asegura que el cuerpo y el html ocupen toda la altura de la ventana */
-    margin: 0; /* Elimina márgenes por defecto */
+    height: 100%; 
+    margin: 0; 
 }
 
 body {
     background: linear-gradient(to bottom, #0d0d0d, #5c0303);
-    background-attachment: fixed; /* Hace que el fondo no se mueva con el contenido */
+    background-attachment: fixed; 
     min-height: 100%;
 }
 
@@ -96,6 +96,7 @@ input{
 }
 
 .items{
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;

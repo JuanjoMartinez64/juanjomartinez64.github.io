@@ -1,9 +1,9 @@
-//Main.js
+
 apiUrl='https://6729702f6d5fa4901b6d2615.mockapi.io/producto';
-// Array donde se guardarán los productos
+
 let productos = [];
 let productoEditandoId = null;
-// Función para obtener los productos y guardarlos en el array
+
 async function obtenerProductos() {
     return fetch(apiUrl)
     .then(respuesta => {
@@ -22,9 +22,9 @@ async function obtenerProductos() {
     
 }
 
-// Función para agregar un nuevo producto a la API
+
 async function checkAuthentication() {
-  const isLoggedIn = await isAuthenticated(); // Verificar si el usuario está autenticado
+  const isLoggedIn = await isAuthenticated(); 
   if (!isLoggedIn) {
       alert("Debes iniciar sesión para realizar esta acción");
       return false;
@@ -32,7 +32,7 @@ async function checkAuthentication() {
   return true;
 }
 
-// Función para agregar un nuevo producto a la API
+
 async function agregarProducto() {
   const isAuthenticated = await checkAuthentication();
   if (!isAuthenticated) return; // Si no está autenticado, no permite agregar producto
@@ -65,12 +65,12 @@ async function agregarProducto() {
       }
 
       const productoAgregado = await response.json();
-      productos.push(productoAgregado); // Agrega el nuevo producto al array de productos
-      mostrar(); // Muestra la lista actualizada
+      productos.push(productoAgregado); 
+      mostrar(); 
       document.getElementById('nombre').value = '';
       document.getElementById('precio').value = '';
       document.getElementById('imgUrl').value = '';
-      // Cerrar el modal
+      
       const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
       modal.hide();
   } catch (error) {
@@ -80,15 +80,15 @@ async function agregarProducto() {
 
 async function eliminarProducto(id) {
   const isAuthenticated = await checkAuthentication();
-  if (!isAuthenticated) return; // Si no está autenticado, no permite eliminar
+  if (!isAuthenticated) return; 
 
   try {
       const response = await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
       if (!response.ok) throw new Error('Error al eliminar el producto');
 
-      // Recargar los productos desde la API para asegurarse de que la lista esté actualizada
+      
       await obtenerProductos();
-      // Mostrar los productos actualizados
+     
       mostrar();
   } catch (error) {
       console.error('Hubo un problema al eliminar el producto:', error);
@@ -99,9 +99,9 @@ async function eliminarProducto(id) {
   
   async function mostrar() {
     const contenedor = document.getElementById('productos-container');
-    contenedor.innerHTML = ''; // Limpia el contenedor
+    contenedor.innerHTML = ''; 
 
-    // Verificar si el usuario está autenticado
+    
     const isLoggedIn = await isAuthenticated();
 
     if (productos.length > 0) {
@@ -123,40 +123,34 @@ async function eliminarProducto(id) {
                 </div>`;
         }
 
-        contenedor.innerHTML = cardsHtml; // Añadir el HTML generado
+        contenedor.innerHTML = cardsHtml; 
     } else {
-        contenedor.innerHTML = '<p>No se encontraron productos.</p>'; // Mensaje si no hay productos
+        contenedor.innerHTML = '<p>No se encontraron productos.</p>'; 
     }
 }
 
 function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
-    console.log('Cargando producto en el formulario...');
-    console.log('ID del producto a editar:', id);
-
-    // Asignar valores al formulario
+    
     document.getElementById('nombre').value = nombre;
     document.getElementById('precio').value = precio;
     document.getElementById('imgUrl').value = img;
     document.querySelector('.selectedType').value = tipo;
 
-    // Guardar el ID del producto que estamos editando
     productoEditandoId = id;
-    console.log('ID guardado en productoEditandoId:', productoEditandoId);
-
-    // Abrir el modal
+    
     const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
     modal.show();
 }
 
 async function actualizarProducto() {
-    console.log('ID del producto a actualizar:', productoEditandoId);  // Verifica el ID antes de la actualización
+    
 
     if (!productoEditandoId) {
         console.error('No hay un producto para editar');
         return;
     }
 
-    const botonConfirmar = document.getElementById('agregarArticulo'); // Asumiendo que el id del botón es 'agregarArticulo'
+    const botonConfirmar = document.getElementById('agregarArticulo'); 
     botonConfirmar.disabled = true; // Deshabilitar el botón para evitar múltiples clics
 
     const nombre = document.getElementById('nombre').value;
@@ -184,7 +178,7 @@ async function actualizarProducto() {
         // Actualizar el producto en la lista local
         productos = productos.map(prod => prod.id === productoEditandoId ? data : prod);
 
-        // Reseteamos el ID después de la actualización
+        
         productoEditandoId = null;  // Limpiar el ID después de la actualización
 
         const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
@@ -197,7 +191,7 @@ async function actualizarProducto() {
     botonConfirmar.disabled = false;
 }
 
-// Llamada principal para obtener y mostrar productos
+
 async function main() {
   await obtenerProductos();
   mostrar();
@@ -205,15 +199,15 @@ async function main() {
 }
 
   
-  // Llamamos a la función principal
+  
   
 
   document.getElementById('agregarArticulo').addEventListener('click', () => {
     if (productoEditandoId) {
-        actualizarProducto(); // Llama a la función para actualizar el producto
-        productoEditandoId = null; // Resetea el ID después de la edición
+        actualizarProducto(); 
+        productoEditandoId = null; 
     } else {
-        agregarProducto(); // Llama a la función para agregar un producto nuevo
+        agregarProducto(); 
     }
 });
 
@@ -221,21 +215,10 @@ async function main() {
 document.getElementById('addItem').addEventListener('click', () => {
     let contenedor = document.getElementById('budgetItems');
 
-    // Crear el HTML para la nueva fila
     const nuevaFila = document.createElement('div');
     nuevaFila.classList.add('itemContainer');
     
-    // Crear la estructura HTML dentro de la nueva fila
     nuevaFila.innerHTML = `
-                    <div class="inputContainer">
-                        <label for="itemSelector">Seleccionar tipo de articulo</label>
-                        <select class="form-select typeItemSelector" aria-label="Default select example">
-                            <option selected>Selecciona un tipo de articulo</option>
-                            <option value="camara">Camara</option>
-                            <option value="alarma">Alarma</option>
-                            <option value="domotica">Domotica</option>
-                        </select>
-                    </div>
                     <div class="inputContainer">
                         <label for="itemSelector">Seleccionar Articulo</label>
                         <select class="form-select itemSelector" aria-label="Default select example">
@@ -255,31 +238,41 @@ document.getElementById('addItem').addEventListener('click', () => {
         <button type="button" class="btn btn-danger deltbn eliminarBtn">X</button>
     `;
     
-    // Añadir la nueva fila al contenedor
     contenedor.appendChild(nuevaFila);
 
-    // Añadir evento al botón de eliminar dentro de la nueva fila
     nuevaFila.querySelector('.eliminarBtn').addEventListener('click', () => {
-        // Eliminar el contenedor de la fila completa (el div con la clase 'itemContainer')
+        
         contenedor.removeChild(nuevaFila);
         
     });
-    loadSelectorItems();
+    loadSelectorItems()
 });
 
+
+
 function loadSelectorItems() {
+    
+    selectedType= document.getElementById('tipoSeleccionado');
+    console.log(selectedType.value)
     const itemSelectors = document.querySelectorAll('.itemSelector');
     itemSelectors.forEach(selector => {
-        selector.innerHTML = '<option selected value="0">Selecciona un articulo</option>';
         productos.forEach(producto => {
-            const option = document.createElement('option');
-            option.value = producto.id;
-            option.textContent = producto.name;
-            selector.appendChild(option);
+            if(producto.tipo == selectedType.value){
+                const option = document.createElement('option');
+                option.value = producto.id;
+                option.textContent = producto.name;
+                selector.appendChild(option);
+            }
         });
     });
 }
 
+
+//Funcion para escuchar el selector de tipo
+document.addEventListener('change', (event) => {
+    if (event.target.id ==='tipoSeleccionado')
+        loadSelectorItems();
+});
 
 document.addEventListener('change', (event) => {
     if (event.target.classList.contains('itemSelector')) {

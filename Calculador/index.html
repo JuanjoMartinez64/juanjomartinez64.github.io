@@ -77,17 +77,17 @@
                 Armar presupuesto
             </h1>
             <form>
+                <div class="inputContainer">
+                    <label for="itemSelector">Tipo de presupuesto</label>
+                    <select class="form-select" aria-label="Default select example" id="tipoSeleccionado">
+                        <option selected>Selecciona un tipo de articulo</option>
+                        <option value="Camara">Camara</option>
+                        <option value="Alarma">Alarma</option>
+                        <option value="Domotica">Domotica</option>
+                    </select>
+                </div>
                 <div class="items" id="budgetItems">
                     <div class="itemContainer">
-                        <div class="inputContainer">
-                            <label for="itemSelector">Seleccionar tipo de articulo</label>
-                            <select class="form-select typeItemSelector" aria-label="Default select example">
-                                <option selected>Selecciona un tipo de articulo</option>
-                                <option value="camara">Camara</option>
-                                <option value="alarma">Alarma</option>
-                                <option value="domotica">Domotica</option>
-                            </select>
-                        </div>
                         <div class="inputContainer">
                             <label for="itemSelector">Seleccionar Articulo</label>
                             <select class="form-select itemSelector" aria-label="Default select example">
