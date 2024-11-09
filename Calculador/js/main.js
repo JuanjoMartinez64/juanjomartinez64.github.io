@@ -135,10 +135,10 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
     document.getElementById('precio').value = precio;
     document.getElementById('imgUrl').value = img;
     document.querySelector('.selectedType').value = tipo;
-    
+
     // Guardar el ID del producto que estamos editando
     productoEditandoId = id;
-
+    console.log(productoEditandoId);
     // Abrir el modal
     const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
     modal.show();
