@@ -195,7 +195,6 @@ async function actualizarProducto() {
 async function main() {
   await obtenerProductos();
   mostrar();
-  loadSelectorItems();
 }
 
   
@@ -217,69 +216,84 @@ document.getElementById('addItem').addEventListener('click', () => {
 
     const nuevaFila = document.createElement('div');
     nuevaFila.classList.add('itemContainer');
-    
+
     nuevaFila.innerHTML = `
-                    <div class="inputContainer">
-                        <label for="itemSelector">Seleccionar Articulo</label>
-                        <select class="form-select itemSelector" aria-label="Default select example">
-                            <option selected value="0">Selecciona un articulo</option>
-                        </select>
-                    </div>
-                    <div class="inputContainer">
-                        <label for="cantItem">Cantidad de articulos</label>
-                        <input type="number" id="cantItem" class="form-control" required>
-                    </div>
-                    <div class="inputContainer">
-                        <label for="cantItem" class="priceLabel">Precio del articulo</label>
-                        <div class="priceContainer">
-                            <p class="priceItem">$0</p>
-                        </div>
-                    </div>
+        <div class="inputContainer">
+            <label for="itemSelector">Seleccionar Articulo</label>
+            <select class="form-select itemSelector" aria-label="Default select example">
+                <option selected value="0">Selecciona un articulo</option>
+            </select>
+        </div>
+        <div class="inputContainer">
+            <label for="cantItem">Cantidad de articulos</label>
+            <input type="number" id="cantItem" class="form-control" required>
+        </div>
+        <div class="inputContainer">
+            <label for="priceContainer" class="priceLabel">Precio del articulo</label>
+            <div class="priceContainer">
+                <p class="priceItem">$0</p>
+            </div>
+        </div>
         <button type="button" class="btn btn-danger deltbn eliminarBtn">X</button>
     `;
-    
+
     contenedor.appendChild(nuevaFila);
 
     nuevaFila.querySelector('.eliminarBtn').addEventListener('click', () => {
-        
         contenedor.removeChild(nuevaFila);
-        
     });
-    loadSelectorItems()
+
+    // Cargar artículos solo para el nuevo selector
+    const nuevoSelector = nuevaFila.querySelector('.itemSelector');
+    loadSelectorItems(nuevoSelector);
 });
 
+function loadSelectorItems(selector) {
+    const selectedType = document.getElementById('tipoSeleccionado').value;
 
+    // Verificar si ya se cargaron las opciones para evitar duplicados
+    const opcionesExistentes = Array.from(selector.options).map(option => option.value);
+    if (opcionesExistentes.length > 1) return;
 
-function loadSelectorItems() {
-    
-    selectedType= document.getElementById('tipoSeleccionado');
-    console.log(selectedType.value)
-    const itemSelectors = document.querySelectorAll('.itemSelector');
-    itemSelectors.forEach(selector => {
-        productos.forEach(producto => {
-            if(producto.tipo == selectedType.value){
-                const option = document.createElement('option');
-                option.value = producto.id;
-                option.textContent = producto.name;
-                selector.appendChild(option);
-            }
-        });
+    // Filtrar productos por tipo seleccionado
+    const itemsFiltrados = productos.filter(producto => producto.tipo === selectedType);
+
+    // Agregar las opciones al selector
+    itemsFiltrados.forEach(producto => {
+        if (!opcionesExistentes.includes(producto.id)) {
+            const option = document.createElement('option');
+            option.value = producto.id;
+            option.textContent = producto.name;
+            selector.appendChild(option);
+        }
     });
-
 }
 
-
-//Funcion para escuchar el selector de tipo
+// Escuchar cambios en el selector de tipo
 document.addEventListener('change', (event) => {
-    let items = document.querySelectorAll('.itemSelector');
     if (event.target.id === 'tipoSeleccionado') {
-        for (item of items){
-            item.innerHTML = '<option selected value="0">Selecciona un articulo</option>';
-        }
-        loadSelectorItems();
+        const selectedType = event.target.value;
+        const itemSelectors = document.querySelectorAll('.itemSelector');
+
+        itemSelectors.forEach(selector => {
+            const selectedValue = selector.value;
+
+            // Actualizar solo si el producto seleccionado no coincide con el tipo actual
+            const selectedProduct = productos.find(prod => prod.id === selectedValue);
+            if (selectedProduct && selectedProduct.tipo === selectedType) return;
+
+            // Resetear el selector
+            selector.innerHTML = '<option selected value="0">Selecciona un articulo</option>';
+            loadSelectorItems(selector);
+        });
+
+        // Resetear precios
+        const precios = document.querySelectorAll('.priceItem');
+        precios.forEach(precio => precio.textContent = '$0');
     }
 });
 
+// Actualizar precio al seleccionar un artículo
 document.addEventListener('change', (event) => {
     if (event.target.classList.contains('itemSelector')) {
         const selectedId = event.target.value;
