@@ -134,7 +134,7 @@ function cargarProductoEnFormulario(id, nombre, precio, img, tipo) {
     document.getElementById('nombre').value = nombre;
     document.getElementById('precio').value = precio;
     document.getElementById('imgUrl').value = img;
-    document.querySelector('itemSelected').value = tipo;
+    document.querySelector('.itemSelected').value = tipo;
     
     // Guardar el ID del producto que estamos editando
     productoEditandoId = id;
