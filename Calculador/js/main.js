@@ -40,13 +40,15 @@ async function agregarProducto() {
   const nombre = document.getElementById('nombre').value;
   const precio = parseFloat(document.getElementById('precio').value);
   let imgUrl = document.getElementById('imgUrl').value;
+  const type = document.getElementById('selectedType').target.value;
   if (imgUrl == '') {
       imgUrl = 'Images/imagen_articulo_por_defecto.jpg';
   }
   const nuevoProducto = {
       name: nombre,
       precio: precio,
-      img: imgUrl
+      img: imgUrl,
+      tipo: tipo
   };
 
   try {
@@ -93,13 +95,7 @@ async function eliminarProducto(id) {
   }
 }
 
-// Llamamos a la función para obtener los productos
-async function main() {
-    await obtenerProductos();
-    
-    // Ahora que los productos están cargados, podemos llamar a mostrar()
-    mostrar();
-  }
+
   
   async function mostrar() {
     const contenedor = document.getElementById('productos-container');
@@ -189,6 +185,7 @@ async function actualizarProducto() {
 async function main() {
   await obtenerProductos();
   mostrar();
+  loadSelectorItems();
 }
 
   
@@ -214,22 +211,33 @@ document.getElementById('addItem').addEventListener('click', () => {
     
     // Crear la estructura HTML dentro de la nueva fila
     nuevaFila.innerHTML = `
-        <div class="inputContainer">
-            <label for="itemSelector">Seleccionar Articulo</label>
-            <select class="form-select" aria-label="Default select example" id="itemSelector">
-                <option selected>Selecciona un articulo</option>
-            </select>
-        </div>
-        <div class="inputContainer">
-            <label for="cantItem">Cantidad de articulos</label>
-            <input type="number" id="cantItem" class="form-control" required>
-        </div>
-        <div class="inputContainer">
-            <label for="cantItem" class="priceLabel">Precio del articulo</label>
-            <div class="priceContainer">
-                <p id="priceItem">$4000</p>
-            </div>
-        </div>
+        <div class="itemContainer" id="budgetItems">
+                    <div class="inputContainer">
+                        <label for="itemSelector">Seleccionar tipo de articulo</label>
+                        <select class="form-select typeItemSelector" aria-label="Default select example">
+                            <option selected>Selecciona un tipo de articulo</option>
+                            <option value="camara">Camara</option>
+                            <option value="alarma">Alarma</option>
+                            <option value="domotica">Domotica</option>
+                        </select>
+                    </div>
+                    <div class="inputContainer">
+                        <label for="itemSelector">Seleccionar Articulo</label>
+                        <select class="form-select itemSelector" aria-label="Default select example">
+                            <option selected value="0">Selecciona un articulo</option>
+                        </select>
+                    </div>
+                    <div class="inputContainer">
+                        <label for="cantItem">Cantidad de articulos</label>
+                        <input type="number" id="cantItem" class="form-control" required>
+                    </div>
+                    <div class="inputContainer">
+                        <label for="cantItem" class="priceLabel">Precio del articulo</label>
+                        <div class="priceContainer">
+                            <p class="priceItem">$0</p>
+                        </div>
+                    </div>
+                </div>
         <button type="button" class="btn btn-danger deltbn eliminarBtn">X</button>
     `;
     
@@ -240,6 +248,31 @@ document.getElementById('addItem').addEventListener('click', () => {
     nuevaFila.querySelector('.eliminarBtn').addEventListener('click', () => {
         // Eliminar el contenedor de la fila completa (el div con la clase 'itemContainer')
         contenedor.removeChild(nuevaFila);
+        
     });
+    loadSelectorItems();
+});
+
+function loadSelectorItems() {
+    const itemSelectors = document.querySelectorAll('.itemSelector');
+    itemSelectors.forEach(selector => {
+        selector.innerHTML = '<option selected value="0">Selecciona un articulo</option>';
+        productos.forEach(producto => {
+            const option = document.createElement('option');
+            option.value = producto.id;
+            option.textContent = producto.name;
+            selector.appendChild(option);
+        });
+    });
+}
+
+
+document.addEventListener('change', (event) => {
+    if (event.target.classList.contains('itemSelector')) {
+        const selectedId = event.target.value;
+        const selectedProduct = productos.find(prod => prod.id === selectedId);
+        const priceContainer = event.target.closest('.itemContainer').querySelector('.priceItem');
+        priceContainer.textContent = selectedProduct ? `$${selectedProduct.precio}` : '$0';
+    }
 });
 

@@ -51,6 +51,15 @@
                                 <label for="nombre">Url de la imagen</label>
                                 <input type="text" class="form-control" id="imgUrl" placeholder="Nombre del artículo">
                             </div>
+                            <div class="form-group">
+                                <label for="nombre">Tipo de articulo</label>
+                                <select class="form-select selectedType" aria-label="Default select example">
+                                    <option selected>Selecciona un tipo de articulo</option>
+                                    <option value="camara">Camara</option>
+                                    <option value="alarma">Alarma</option>
+                                    <option value="domotica">Domotica</option>
+                                </select>
+                            </div>
                             </form>
                         </div>
                     </div>
@@ -71,9 +80,18 @@
             <div class="items" id="budgetItems">
                 <div class="itemContainer" id="budgetItems">
                     <div class="inputContainer">
+                        <label for="itemSelector">Seleccionar tipo de articulo</label>
+                        <select class="form-select typeItemSelector" aria-label="Default select example">
+                            <option selected>Selecciona un tipo de articulo</option>
+                            <option value="camara">Camara</option>
+                            <option value="alarma">Alarma</option>
+                            <option value="domotica">Domotica</option>
+                        </select>
+                    </div>
+                    <div class="inputContainer">
                         <label for="itemSelector">Seleccionar Articulo</label>
-                        <select class="form-select" aria-label="Default select example" id="itemSelector">
-                            <option selected>Selecciona un articulo</option>
+                        <select class="form-select itemSelector" aria-label="Default select example">
+                            <option selected value="0">Selecciona un articulo</option>
                         </select>
                     </div>
                     <div class="inputContainer">
@@ -81,11 +99,12 @@
                         <input type="number" id="cantItem" class="form-control" required>
                     </div>
                     <div class="inputContainer">
-                        <label for="cantItem" class="priceLabel">Precio del articulo</label>
+                        <label for="priceContainer" class="priceLabel">Precio del articulo</label>
                         <div class="priceContainer">
-                            <p id="priceItem">$4000</p>
+                            <p class="priceItem">$0</p>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-danger deltbn eliminarBtn hidden">X</button>
                 </div>
             </div>
             <button type="button" class="btn btn-success mt-5 addBtn" id="addItem">+</button>

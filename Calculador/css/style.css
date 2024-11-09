@@ -153,3 +153,8 @@ form{
     display: flex;
     gap: 2rem;
 }
+
+
+.hidden{
+    visibility: hidden;
+}
