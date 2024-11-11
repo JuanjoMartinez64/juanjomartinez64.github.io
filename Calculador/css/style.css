@@ -93,6 +93,8 @@ input{
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    padding-bottom: 15px;
+    padding-left: 10px;
 }
 
 .items{
@@ -170,6 +172,16 @@ form{
 
 .hidden{
     visibility: hidden;
+}
+
+footer{
+    margin-top: 1rem;
+}
+
+footer>p{
+    text-align: center;
+    color:#ffffff;
+    font-size: 10px;
 }
 
 
