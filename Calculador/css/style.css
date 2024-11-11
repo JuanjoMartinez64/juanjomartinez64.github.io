@@ -95,6 +95,7 @@ input{
     gap: 1rem;
     padding-bottom: 15px;
     padding-left: 10px;
+    padding-right: 10px;
 }
 
 .items{
@@ -152,10 +153,13 @@ form{
     align-items: center;
 }
 
-.cantBocasContainer{
+.bocasContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     margin-top: 2rem;
 }
-#cantBocas{
+#cantBocas,#priceBocas{
     width: 100px;
 }
 

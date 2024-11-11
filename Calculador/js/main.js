@@ -226,7 +226,7 @@ document.getElementById('addItem').addEventListener('click', () => {
         </div>
         <div class="inputContainer">
             <label for="cantItem">Cantidad de articulos</label>
-            <input type="number" id="cantItem" class="form-control" required>
+            <input type="number" class="form-control cantItem" required>
         </div>
         <div class="inputContainer">
             <label for="priceContainer" class="priceLabel">Precio del articulo</label>
@@ -302,4 +302,48 @@ document.addEventListener('change', (event) => {
         priceContainer.textContent = selectedProduct ? `$${selectedProduct.precio}` : '$0';
     }
 });
+
+
+document.getElementById('generarPdf').addEventListener('click',()=>{
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    let items = document.querySelectorAll('.itemContainer');
+    let precioBocas = document.getElementById('priceBocas').value;
+    let cantBocas = document.getElementById('cantBocas').value;
+
+    let total = 0;
+    let yPosition = 10;
+
+    doc.setFontSize(18);
+    doc.text('Presupuesto de Compra', 10, yPosition);
+    yPosition += 10;
+
+    for (const item of items){
+
+        let articuloId = parseInt(item.querySelector('.itemSelector').value, 10);
+        const producto = productos.find(p => p.id == articuloId); // Obtengo el nombre del producto con la id del select
+        const articuloNombre = producto ? producto.name : "Producto desconocido";
+        let cantidad = item.querySelector('.cantItem').value;
+        let precio = parseInt(item.querySelector('.priceItem').textContent.replace('$', '')) || 0;;
+
+        doc.setFontSize(12);
+        doc.text(`${articuloNombre} x ${cantidad}`, 10, yPosition);
+        yPosition += 10;
+
+        total += precio * cantidad;
+
+        console.log ('El total es de '+ precio + ' Compraste: '+cantidad+' '+articuloNombre);
+    }
+
+    
+
+
+    let totalFinal=(total+(precioBocas*cantBocas));
+    yPosition += 10;
+    doc.text(`Total Final: $${totalFinal}, se debe abonar un adelanto de $${totalFinal*.6}`, 10, yPosition);
+    // Guardar el PDF
+    doc.save('presupuesto.pdf');
+})
 

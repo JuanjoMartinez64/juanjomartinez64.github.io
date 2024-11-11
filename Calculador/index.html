@@ -96,7 +96,7 @@
                         </div>
                         <div class="inputContainer">
                             <label for="cantItem">Cantidad de articulos</label>
-                            <input type="number" id="cantItem" class="form-control" required>
+                            <input type="number"  class="form-control cantItem" required>
                         </div>
                         <div class="inputContainer">
                             <label for="priceContainer" class="priceLabel">Precio del articulo</label>
@@ -108,12 +108,18 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-success mt-5 addBtn" id="addItem">+</button>
-                <div class="inputContainer cantBocasContainer">
-                    <label for="cantBocas">Cantidad de bocas</label>
-                    <input type="number" id="cantBocas" class="form-control" required>
+                <div class="inputContainer bocasContainer">
+                    <div class="inputContainer">
+                        <label for="priceBocas">Precio de la boca</label>
+                        <input type="number" id="priceBocas" class="form-control" required>
+                    </div>
+                    <div class="inputContainer">
+                        <label for="cantBocas">Cantidad de bocas</label>
+                        <input type="number" id="cantBocas" class="form-control" required>
+                    </div>
                 </div>
                 <div class="btnGenerarContainer">
-                    <button type="button" class="btn btn-primary">Generar PDF</button>
+                    <button type="button" class="btn btn-primary" id="generarPdf">Generar PDF</button>
                     <button type="button" class="btn btn-primary">Generar PDF Discriminado</button>
                 </div>
             </form>
@@ -125,10 +131,8 @@
         <p>Digiseg 2024 © Todos los derechos reservados. </p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="js/main.js"></script>
-
-    
 </body>
 </html>
 
