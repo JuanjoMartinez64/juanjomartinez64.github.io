@@ -320,13 +320,23 @@ document.getElementById('generarPdf').addEventListener('click',()=>{
     doc.text('Presupuesto de Compra', 10, yPosition);
     yPosition += 10;
 
+    if (isNaN(precioBocas) || isNaN(cantBocas) || precioBocas <= 0 || cantBocas <= 0) {
+        alert('Por favor, ingrese valores válidos para el precio y cantidad de bocas.');
+        return; 
+    }
+
     for (const item of items){
 
         let articuloId = parseInt(item.querySelector('.itemSelector').value, 10);
-        const producto = productos.find(p => p.id == articuloId); // Obtengo el nombre del producto con la id del select
+        const producto = productos.find(p => p.id == articuloId);
         const articuloNombre = producto ? producto.name : "Producto desconocido";
         let cantidad = item.querySelector('.cantItem').value;
-        let precio = parseInt(item.querySelector('.priceItem').textContent.replace('$', '')) || 0;;
+        let precio = parseInt(item.querySelector('.priceItem').textContent.replace('$', '')) || 0;
+
+        if (isNaN(articuloId) || articuloId <= 0 || isNaN(cantidad) || cantidad <= 0 || isNaN(precio) || precio <= 0) {
+            alert('Por favor, complete todos los campos de los productos correctamente.');
+            return;
+        }
 
         doc.setFontSize(12);
         doc.text(`${articuloNombre} x ${cantidad}`, 10, yPosition);
@@ -341,9 +351,16 @@ document.getElementById('generarPdf').addEventListener('click',()=>{
 
 
     let totalFinal=(total+(precioBocas*cantBocas));
+
+    if (isNaN(totalFinal) || totalFinal <= 0) {
+        alert('Error al calcular el total. Por favor, revise los valores ingresados.');
+        return;
+    }
+
+
     yPosition += 10;
     doc.text(`Total Final: $${totalFinal}, se debe abonar un adelanto de $${totalFinal*.6}`, 10, yPosition);
-    // Guardar el PDF
+
     doc.save('presupuesto.pdf');
 })
 
