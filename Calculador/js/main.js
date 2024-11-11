@@ -41,6 +41,25 @@ async function agregarProducto() {
   const precio = parseFloat(document.getElementById('precio').value);
   let imgUrl = document.getElementById('imgUrl').value;
   const type = document.querySelector('.selectedType').value;
+
+    
+  if (!nombre) {
+    alert('Por favor, ingresa un nombre para el producto');
+    return;
+  }
+
+  
+  if (isNaN(precio) || precio <= 0) {
+    alert('Por favor, ingresa un precio válido para el producto');
+    return;
+  }
+
+  
+  if (!type) {
+    alert('Por favor, selecciona un tipo para el producto');
+    return;
+  }
+
   if (imgUrl == '') {
       imgUrl = 'Images/imagen_articulo_por_defecto.jpg';
   }
