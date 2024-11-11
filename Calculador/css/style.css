@@ -9,6 +9,20 @@ h1{
     text-align: center;
 }
 
+.logoContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logoContainer>img{
+    width: 130px;
+}
+
+.logoText{
+    height: 70px;
+}
+
 .containerGral{
     width: 100%;
     display: flex;
@@ -201,5 +215,12 @@ footer>p{
         flex-direction: column;
     }
 
+    .logoContainer>img{
+        width: 90px;
+    }
+    
+    .logoText{
+        height: 40px;
+    }
    
 }
