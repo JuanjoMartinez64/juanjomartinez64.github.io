@@ -502,19 +502,9 @@ let adelantoFormateado = adelanto.toLocaleString('es-ES');
             totalOpcional += precio * cantProducto;
         }
 
-        if (isNaN(totalOpcional) || totalOpcional <= 0) {
-            alert('Error al calcular el total. Por favor, revise los valores ingresados.');
-            return;
-        }
+        
 
-        let adelanto = Math.floor(totalOpcional * 0.6);
-        let totalRedondeado = Math.floor(totalOpcional);
-        // Aplica `toLocaleString()` solo a los números redondeados
-        let totalFormateado = totalRedondeado.toLocaleString('es-ES');
-        let adelantoFormateado = adelanto.toLocaleString('es-ES');
-
-        yPosition += 10;
-        doc.text(`Total, materiales mas mano de obra $${totalFormateado} ARS, se debe abonar un adelanto de $${adelantoFormateado} ARS.`, 20, yPosition);
+        
         yPosition+=20;
         doc.text(`Plazo mantenimiento de oferta 10 dias corridos. esta oferta vence el dia `+ getDate(10),20,yPosition);
     }
