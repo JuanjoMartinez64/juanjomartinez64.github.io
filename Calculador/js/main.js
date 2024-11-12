@@ -492,10 +492,11 @@ let adelantoFormateado = adelanto.toLocaleString('es-ES');
                 alert('Por favor, complete todos los campos de los productos correctamente.');
                 return;
             }
-
+            let precioRedondeado = Math.floor(precio);
+            let precioFormateado = precioRedondeado.toLocaleString('es-ES');
             doc.setFontSize(12);
             yPosition+=5;
-            doc.text(`${producto} x ${cantProducto}`, 20, yPosition);
+            doc.text(`${producto} x ${cantProducto} $${precio}`, 20, yPosition);
             yPosition += 5;
 
             totalOpcional += precio * cantProducto;
