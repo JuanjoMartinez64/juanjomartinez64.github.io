@@ -267,6 +267,40 @@ document.getElementById('addItem').addEventListener('click', () => {
     loadSelectorItems(nuevoSelector);
 });
 
+document.getElementById('addOpcional').addEventListener('click', ()=>{
+
+    let contenedor = document.getElementById('opcionalesContainer');
+
+    const nuevaFila = document.createElement('div');
+    nuevaFila.classList.add('itemContainerOptional');
+
+    nuevaFila.innerHTML = `
+
+        <div class="inputContainer">
+            <label for="nombreArticulo">Nombre del Articulo</label>
+            <input type="text" class="form-control nombreArticulo" required>
+        </div>
+
+        <div class="inputContainer">
+            <label for="cantItemOpcional">Cantidad de articulos</label>
+            <input type="number" class="form-control cantItemOpcional" required>
+        </div>
+        <div class="inputContainer">
+            <label for="priceItemOpcional">Precio</label>
+            <input type="number" class="form-control priceItemOpcional" required>
+        </div>
+
+        <button type="button" class="btn mt-4 btn-danger deltbn eliminarBtn">X</button>
+    `;
+
+    contenedor.appendChild(nuevaFila);
+
+    nuevaFila.querySelector('.eliminarBtn').addEventListener('click', () => {
+        contenedor.removeChild(nuevaFila);
+    });
+
+});
+
 function loadSelectorItems(selector) {
     const selectedType = document.getElementById('tipoSeleccionado').value;
 
@@ -322,24 +356,83 @@ document.addEventListener('change', (event) => {
     }
 });
 
+function getDate(diasSumar = 0) {
+    const fechaHoy = new Date();
+    
+    // Sumar los días si se pasa el parámetro
+    fechaHoy.setDate(fechaHoy.getDate() + diasSumar);
+
+    const meses = [
+        "enero", "febrero", "marzo", "abril", "mayo", "junio", 
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ];
+
+    const dia = fechaHoy.getDate();
+    const mes = meses[fechaHoy.getMonth()]; 
+    const anio = fechaHoy.getFullYear();
+
+    const fechaFormateada = `${dia} de ${mes} de ${anio}`;
+
+    return fechaFormateada;
+}
+
 
 document.getElementById('generarPdf').addEventListener('click',()=>{
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    const fechaHoy = getDate();
+
+    let tipoPresupuesto = document.getElementById('tipoSeleccionado').value;
+    let nombreCliente = document.getElementById('nombreCliente').value;
+    let direccionCliente = document.getElementById('direccionCliente').value;
     let items = document.querySelectorAll('.itemContainer');
+    let itemsOpcionales = document.querySelectorAll('.opcionales');
     let precioBocas = document.getElementById('priceBocas').value;
     let cantBocas = document.getElementById('cantBocas').value;
 
     let total = 0;
-    let yPosition = 10;
+    let yPosition = 20;
+    doc.setFont("times", "normal");
 
-    doc.setFontSize(18);
-    doc.text('Presupuesto de Compra', 10, yPosition);
+    // 1. Agregar logo
+    doc.addImage('Images/DigisegLogo.png', 'PNG', 25, yPosition, 25, 25); // Tamaño del logo
+    yPosition += 7;
+
+
+    // 2. Agregar texto "Seguridad Digital"
+    doc.setFontSize(11);
+    doc.text('Seguridad Digital.', 50, yPosition); // 45 es la posición X después del logo
+    yPosition += 0;
+
+    // 3. Agregar imagen "DigisegText.png"
+    doc.addImage('Images/DigisegText.png', 'PNG', 45, yPosition, 40, 15); // Tamaño de la imagen
+    yPosition += 15;
+
+    // 4. Agregar texto "Tel: 154346527"
+    doc.setFontSize(8);
+    doc.text('Tel: 154346527', 55, yPosition); // Posición bajo la imagen
     yPosition += 10;
 
-    if (isNaN(precioBocas) || isNaN(cantBocas) || precioBocas <= 0 || cantBocas <= 0) {
+
+    doc.setFontSize(12);
+    doc.text(fechaHoy,140,yPosition)
+    yPosition+=12;
+    doc.setFontSize(14);
+    doc.text('PRESUPUESTO', 90, yPosition);
+    yPosition += 10;
+    doc.setFontSize(12);
+    doc.text('Estimado Sr/Sra',20,yPosition);
+    yPosition+=5;
+    doc.text(nombreCliente,20,yPosition);
+    yPosition+=5;
+    doc.text(direccionCliente,20,yPosition);
+    yPosition+=10;
+    doc.text('Instalacion de sistema de '+tipoPresupuesto+ ' compuesto por:',20,yPosition);
+    yPosition+=10;
+
+    if (isNaN(precioBocas) || isNaN(cantBocas) || precioBocas <= 0 || cantBocas <= 0 || nombreCliente=='' || direccionCliente == '') {
         alert('Por favor, ingrese valores válidos para el precio y cantidad de bocas.');
         return; 
     }
@@ -358,7 +451,7 @@ document.getElementById('generarPdf').addEventListener('click',()=>{
         }
 
         doc.setFontSize(12);
-        doc.text(`${articuloNombre} x ${cantidad}`, 10, yPosition);
+        doc.text(`${articuloNombre} x ${cantidad}`, 20, yPosition);
         yPosition += 10;
 
         total += precio * cantidad;
@@ -376,10 +469,56 @@ document.getElementById('generarPdf').addEventListener('click',()=>{
         return;
     }
 
+    let adelanto = Math.floor(totalFinal * 0.6);
+let totalRedondeado = Math.floor(totalFinal);
+
+// Aplica `toLocaleString()` solo a los números redondeados
+let totalFormateado = totalRedondeado.toLocaleString('es-ES');
+let adelantoFormateado = adelanto.toLocaleString('es-ES');
 
     yPosition += 10;
-    doc.text(`Total Final: $${totalFinal}, se debe abonar un adelanto de $${totalFinal*.6}`, 10, yPosition);
+    doc.text(`Total, materiales mas mano de obra $${totalFormateado} ARS, se debe abonar un adelanto de $${adelantoFormateado} ARS.`, 20, yPosition);
+    yPosition +=20;
 
-    doc.save('presupuesto.pdf');
-})
+    if (itemsOpcionales[0].children.length > 0){
+        doc.text('Opcional que se agrega al presupuesto', 20, yPosition);
+        let totalOpcional=0;
+        for (const itemOpcional of itemsOpcionales){
+            const producto = itemOpcional.querySelector('.nombreArticulo').value;
+            const cantProducto = itemOpcional.querySelector('.cantItemOpcional').value;
+            const precio = itemOpcional.querySelector('.priceItemOpcional').value;
+
+            if ((producto == '')|| isNaN(cantProducto) || cantProducto <= 0 || isNaN(precio) || precio <= 0) {
+                alert('Por favor, complete todos los campos de los productos correctamente.');
+                return;
+            }
+
+            doc.setFontSize(12);
+            yPosition+=5;
+            doc.text(`${producto} x ${cantProducto}`, 20, yPosition);
+            yPosition += 5;
+
+            totalOpcional += precio * cantProducto;
+        }
+
+        if (isNaN(totalOpcional) || totalOpcional <= 0) {
+            alert('Error al calcular el total. Por favor, revise los valores ingresados.');
+            return;
+        }
+
+        let adelanto = Math.floor(totalOpcional * 0.6);
+        let totalRedondeado = Math.floor(totalOpcional);
+        // Aplica `toLocaleString()` solo a los números redondeados
+        let totalFormateado = totalRedondeado.toLocaleString('es-ES');
+        let adelantoFormateado = adelanto.toLocaleString('es-ES');
+
+        yPosition += 10;
+        doc.text(`Total, materiales mas mano de obra $${totalFormateado} ARS, se debe abonar un adelanto de $${adelantoFormateado} ARS.`, 20, yPosition);
+        yPosition+=20;
+        doc.text(`Plazo mantenimiento de oferta 10 dias corridos. esta oferta vence el dia `+ getDate(10),20,yPosition);
+    }
+
+    
+    doc.save('Presupuesto '+nombreCliente);
+});
 

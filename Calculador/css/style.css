@@ -100,7 +100,7 @@ input{
     justify-content: center;
 }
 
-.itemContainer{
+.itemContainer, .itemContainerOptional{
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.2);
     display: flex;
@@ -110,6 +110,11 @@ input{
     padding-bottom: 15px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+h2{ 
+    margin-top: 2rem;
+    color: #ffffff;
 }
 
 .items{
@@ -187,6 +192,12 @@ form{
     gap: 2rem;
 }
 
+.infoCliente{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    display: flex;
+    gap: 2rem;
+}
 
 .hidden{
     visibility: hidden;
